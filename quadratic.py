@@ -20,8 +20,8 @@ def find_roots(a, b, c):
     else:
         return "NO ROOTS"
 
-# a = float(input("a = "))
-# b = float(input("b = "))
-# c = float(input("c = "))
-#
-# print(find_roots(a, b, c))
+a = float(input("a = "))
+b = float(input("b = "))
+c = float(input("c = "))
+
+print(find_roots(a, b, c))
