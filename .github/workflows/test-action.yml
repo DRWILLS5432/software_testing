@@ -8,8 +8,6 @@ jobs:
       - run: pip uninstall python-coveralls
       - run: |
              pip install coveralls
-             coveralls
-             coveralls --service=github
       - run: coverage run ./quadratic_tests.py
 
       - name: Coveralls
