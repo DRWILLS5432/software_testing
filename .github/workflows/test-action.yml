@@ -6,9 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: pip uninstall python-coveralls
-      - run: |
-             pip install coveralls
-             coveralls --service=github
+      - run: pip install coveralls
       - run: coverage run ./quadratic_tests.py
 
       - name: Coveralls
