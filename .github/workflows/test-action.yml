@@ -1,13 +1,39 @@
-name: CI/CD GitHub Actions
-on: [push]
-jobs:
-  gtest-tests:
-    runs-on: ubuntu-latest
+steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Execute tests
+        run: |
+            pip install tox
+            pip install -e .[for_tests]
+            export DJANGO=${{ matrix.django-version }}
+            export PYTHON=${{ matrix.python-version }}
+            export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+            tox
+      - name: Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         run: |
+             pip install coveralls
+             coveralls
+             coveralls --service=github
+
+   build_and_package_sanity:
+     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6]
     steps:
       - uses: actions/checkout@v2
-      - run: pip uninstall python-coveralls
-      - run: pip install coveralls
-      - run: coverage run ./quadratic_tests.py
-
-      - name: Coveralls
-        run: COVERALLS_REPO_TOKEN=${{ secrets.coveralls_token }} coveralls
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Build
+        run: |
+            pip install tox
+            pip install -e .[for_tests]
+            ./scripts/build.sh
