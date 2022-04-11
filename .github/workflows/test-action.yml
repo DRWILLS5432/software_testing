@@ -1,5 +1,6 @@
 name: CI/CD GitHub Actions
 on: [push]
+
 jobs:
   gtest-tests:
     runs-on: ubuntu-latest
