@@ -1,8 +1,10 @@
-# import math
 from math import sqrt
 
-
 def find_roots(a, b, c):
+    # Additional condition for b and c
+    if b == 0 and c == 0:
+        return "Infinite roots"
+
     d = b * b - 4 * a * c
 
     if a == 0:
@@ -20,8 +22,9 @@ def find_roots(a, b, c):
     else:
         return "NO ROOTS"
 
+# Example usage
 # a = float(input("a = "))
 # b = float(input("b = "))
 # c = float(input("c = "))
-
 # print(find_roots(a, b, c))
+
